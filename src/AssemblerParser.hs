@@ -6,7 +6,7 @@ import Text.Parsec
 import Text.Parsec.String
 
 import AST
-
+-- "+M;JMP"
 parseDestination :: Parser C
 parseDestination = do
   d <- many1 (oneOf "ADM")
@@ -38,7 +38,7 @@ parseLocation = do
 
 parseSymbol :: Parser Instruction
 parseSymbol = do
-  v <- many1 (alphaNum <|> satisfy (\c -> c == '_'))
+  v <- many1 (alphaNum <|> oneOf "$._")
   return (Symbol v)
 
 parseAddress :: Parser Instruction

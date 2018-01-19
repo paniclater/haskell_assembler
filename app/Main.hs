@@ -35,5 +35,5 @@ processText t =
 
 main :: IO ()
 main = do
-  contents <- fmap processText $ readFile "assemblies/Max.asm"
+  contents <- fmap processText $ readFile "assemblies/Pong.asm"
   writeFile "MaxL.hack" contents
