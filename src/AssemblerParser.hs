@@ -7,19 +7,19 @@ import Text.Parsec.String
 
 import Syntax
 -- "+M;JMP"
-parseDestination :: Parser CPart
+parseDestination :: Parser Destination
 parseDestination = do
   d <- many1 (oneOf "ADM")
   char '='
   return (Destination d)
 
-parseJump :: Parser CPart
+parseJump :: Parser Jump
 parseJump = do
   char ';'
   j <- many1 (oneOf "JMPGTEQLN")
   return (Jump j)
 
-parseComputation :: Parser CPart
+parseComputation :: Parser Computation
 parseComputation = do
   c <- many1 (oneOf "ADM+-10|!&")
   return (Computation c)
