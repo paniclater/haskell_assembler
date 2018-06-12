@@ -5,21 +5,21 @@ module AssemblerParser (
 import Text.Parsec
 import Text.Parsec.String
 
-import AST
+import Syntax
 -- "+M;JMP"
-parseDestination :: Parser C
+parseDestination :: Parser CPart
 parseDestination = do
   d <- many1 (oneOf "ADM")
   char '='
   return (Destination d)
 
-parseJump :: Parser C
+parseJump :: Parser CPart
 parseJump = do
   char ';'
   j <- many1 (oneOf "JMPGTEQLN")
   return (Jump j)
 
-parseComputation :: Parser C
+parseComputation :: Parser CPart
 parseComputation = do
   c <- many1 (oneOf "ADM+-10|!&")
   return (Computation c)
@@ -29,7 +29,7 @@ parseInstruction = do
   d <- (try parseDestination) <|> return (Destination "")
   c <- parseComputation
   j <- parseJump <|> return (Jump "")
-  return (Instruction d c j)
+  return (C d c j)
 
 parseLocation :: Parser Instruction
 parseLocation = do

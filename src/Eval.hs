@@ -6,7 +6,7 @@ module Eval
 import Numeric
 import Data.Char
 
-import AST
+import Syntax
 
 to16BitBinaryString :: String -> String
 to16BitBinaryString x = pad $ showIntAtBase 2 intToDigit (read x) ""
@@ -17,11 +17,11 @@ to16BitBinaryString x = pad $ showIntAtBase 2 intToDigit (read x) ""
 
 eval :: Instruction -> String
 eval (Location s) = to16BitBinaryString s
-eval (Instruction d c j) = "111" ++ (evalC c) ++ (evalC d) ++ (evalC j)
+eval (C d c j) = "111" ++ (evalC c) ++ (evalC d) ++ (evalC j)
 eval (Symbol s) = s
 eval _ = ""
 
-evalC :: C -> String
+evalC :: CPart -> String
 evalC (Destination "M")   = "001"
 evalC (Destination "D")   = "010"
 evalC (Destination "MD")  = "011"

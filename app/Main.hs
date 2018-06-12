@@ -2,7 +2,7 @@ module Main where
 
 import qualified Data.Map.Strict as StrictMap
 
-import AST
+import Syntax
 import AssemblerParser
 import Eval
 
@@ -16,7 +16,7 @@ getMemoryLocation (instructions, symbols, freeAddress) i = (i:instructions, symb
 
 addLoopSymbol :: (StrictMap.Map String Integer, Integer) -> Instruction -> (StrictMap.Map String Integer, Integer)
 addLoopSymbol (symbols, count) (Loop l) = (StrictMap.insert l (count + 1) symbols, count)
-addLoopSymbol (symbols, count) (Instruction _ _ _) = (symbols, count + 1)
+addLoopSymbol (symbols, count) (C _ _ _) = (symbols, count + 1)
 addLoopSymbol (symbols, count) (Location _) = (symbols, count + 1)
 addLoopSymbol (symbols, count) (Symbol _) = (symbols, count + 1)
 addLoopSymbol (symbols, count) _ = (symbols, count)
@@ -36,4 +36,4 @@ processText t =
 main :: IO ()
 main = do
   contents <- fmap processText $ readFile "assemblies/Pong.asm"
-  writeFile "MaxL.hack" contents
+  writeFile "Pong.hack" contents
